@@ -5,8 +5,9 @@ describe QuestionsController, type: :controller do
   let(:answer) { FactoryGirl.create :answer, :question_id => [question.id] }
 
   it "#index" do
+    question
     get :index
-    expect(assigns(:questions)).to eq Question.all
+    expect(assigns(:questions)).to include Question.last
   end
 
   it "#show" do
@@ -48,5 +49,23 @@ describe QuestionsController, type: :controller do
     patch :update, id: question.id, question: { title: new_title }
     question.reload
     expect(question.title).to eq new_title
+  end
+
+  context "votes" do
+    it "should increment votes when upvoted" do
+      question
+      expect {
+        patch :up_vote, id: question.id
+        question.reload
+      }.to change { question.votes }.by(1)
+    end
+
+    it "should decrement votes when downvoted" do
+      question
+      expect {
+        patch :down_vote, id: question.id
+        question.reload
+      }.to change { question.votes }.by(-1)
+    end
   end
 end

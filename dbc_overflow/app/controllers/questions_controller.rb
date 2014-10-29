@@ -49,6 +49,8 @@ class QuestionsController < ApplicationController
     @question.increment!(:votes)
 
     redirect_to :back
+  rescue ActionController::RedirectBackError
+    redirect_to root_path
   end
 
   def down_vote
@@ -56,6 +58,8 @@ class QuestionsController < ApplicationController
     @question.decrement!(:votes)
 
     redirect_to :back
+  rescue ActionController::RedirectBackError
+    redirect_to root_path
   end
 
   private
