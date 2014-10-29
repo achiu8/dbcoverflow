@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   def index
     @questions = Question.all
+    @question = Question.new
   end
 
   def show
@@ -9,7 +10,7 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @question = Question.new
+    redirect_to questions_path
   end
 
   def create
@@ -18,7 +19,7 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to @question
     else
-      render 'new'
+      redirect_to questions_path
     end
   end
 
