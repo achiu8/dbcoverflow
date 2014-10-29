@@ -1,5 +1,13 @@
 <h2><%= @question.title %></h2>
-<p><%= @question.content %>
+<div class="votes">
+  <h3>
+    Votes: <%= @question.votes %>
+    <%= link_to 'Up', @question.id.to_s + '/up_vote',
+      method: :patch%>
+    <%= link_to 'Down', @question.id.to_s + '/down_vote',
+      method: :patch%>
+  </h3>
+<p><%= @question.content %></p>
 
 <h3>Answers</h3>
 <ul>

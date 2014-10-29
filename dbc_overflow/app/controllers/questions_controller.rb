@@ -48,14 +48,14 @@ class QuestionsController < ApplicationController
     @question = Question.find params[:id]
     @question.increment!(:votes)
 
-    redirect_to questions_path
+    redirect_to :back
   end
 
   def down_vote
     @question = Question.find params[:id]
     @question.decrement!(:votes)
 
-    redirect_to questions_path
+    redirect_to :back
   end
 
   private
