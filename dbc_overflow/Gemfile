@@ -39,6 +39,7 @@ gem 'spring',        group: :development
 # gem 'debugger', group: [:development, :test]
 
 gem 'faker'
+gem 'httparty'
 
 group :test, :development do
   gem 'rspec-rails'

@@ -1,21 +1,20 @@
+<p><%= @quote %></p>
 <h1>Questions</h1>
 <% @questions.each do |question| %>
-  <div class="question">
-    <div class="votes">
-      <%= question.votes %>
-      <%= link_to 'Up', 'questions/' + question.id.to_s + '/up_vote',
-        method: :patch%>
-      <%= link_to 'Down', 'questions/' + question.id.to_s + '/down_vote',
-        method: :patch%>
-    </div>
-    <span class="question-title">
-      <%= link_to question.title, question_path(question) %>
-    </span>
-    <span class="edit">
-      <%= link_to 'Edit', edit_question_path(question) %>
-    </span>
+<div class="question">
+  <div class="votes">
+    <%= question.votes %>
+    <%= link_to 'Up', upvote_question_path(question), method: :patch %>
+    <%= link_to 'Down', downvote_question_path(question), method: :patch %>
   </div>
-  <hr>
+  <span class="question-title">
+    <%= link_to question.title, question_path(question) %>
+  </span>
+  <span class="edit">
+    <%= link_to 'Edit', edit_question_path(question) %>
+  </span>
+</div>
+<hr>
 <% end %>
 
 <h3>Add a question:</h3>

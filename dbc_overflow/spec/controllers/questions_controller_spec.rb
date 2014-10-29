@@ -55,7 +55,7 @@ describe QuestionsController, type: :controller do
     it "should increment votes when upvoted" do
       question
       expect {
-        patch :up_vote, id: question.id
+        patch :upvote, id: question.id
         question.reload
       }.to change { question.votes }.by(1)
     end
@@ -63,7 +63,7 @@ describe QuestionsController, type: :controller do
     it "should decrement votes when downvoted" do
       question
       expect {
-        patch :down_vote, id: question.id
+        patch :downvote, id: question.id
         question.reload
       }.to change { question.votes }.by(-1)
     end

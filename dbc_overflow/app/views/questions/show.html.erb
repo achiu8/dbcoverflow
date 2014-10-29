@@ -2,19 +2,25 @@
 <div class="votes">
   <h3>
     Votes: <%= @question.votes %>
-    <%= link_to 'Up', @question.id.to_s + '/up_vote',
-      method: :patch%>
-    <%= link_to 'Down', @question.id.to_s + '/down_vote',
-      method: :patch%>
+    <%= link_to 'Up', upvote_question_path(@question), method: :patch%>
+    <%= link_to 'Down', downvote_question_path(@question), method: :patch%>
   </h3>
 <p><%= @question.content %></p>
 
 <h3>Answers</h3>
-<ul>
 <% @answers.each do |answer| %>
-  <li><%= answer.content %></li>
+<div class="answer">
+  <div class="votes">
+    <%= answer.votes %>
+    <%= link_to 'Up', upvote_question_answer_path(@question, answer),
+      method: :patch %>
+    <%= link_to 'Down', downvote_question_answer_path(@question, answer),
+      method: :patch %>
+  </div>
+  <span class="answer-content"><%= answer.content %></span>
+</div>
+<hr>
 <% end %>
-</ul>
 
 <h3>Add an answer:</h3>
 <%= render 'answers/form' %>

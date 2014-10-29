@@ -2,11 +2,14 @@ class QuestionsController < ApplicationController
   def index
     @questions = Question.order(votes: :desc)
     @question = Question.new
+
+    response = HTTParty.get("https://api.github.com/zen")
+    @quote = response.body
   end
 
   def show
     @question = Question.find params[:id]
-    @answers = @question.answers
+    @answers = @question.answers.order(votes: :desc)
   end
 
   def new
@@ -44,7 +47,7 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def up_vote
+  def upvote
     @question = Question.find params[:id]
     @question.increment!(:votes)
 
@@ -53,7 +56,7 @@ class QuestionsController < ApplicationController
     redirect_to root_path
   end
 
-  def down_vote
+  def downvote
     @question = Question.find params[:id]
     @question.decrement!(:votes)
 

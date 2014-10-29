@@ -4,9 +4,16 @@ Rails.application.routes.draw do
   root 'questions#index'
 
   resources :questions do
-    resources :answers
-  end
+    member do
+      patch 'upvote'
+      patch 'downvote'
+    end
 
-  patch 'questions/:id/up_vote' => 'questions#up_vote'
-  patch 'questions/:id/down_vote' => 'questions#down_vote'
+    resources :answers do
+      member do
+        patch 'upvote'
+        patch 'downvote'
+      end
+    end
+  end
 end
