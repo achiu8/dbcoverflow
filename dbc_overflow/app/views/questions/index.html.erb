@@ -1,12 +1,22 @@
 <h1>Questions</h1>
-<ul>
 <% @questions.each do |question| %>
-  <li>
-    <%= link_to question.title, question_path(question) %>
-    <%= link_to 'Edit', edit_question_path(question) %>
-  </li>
+  <div class="question">
+    <div class="votes">
+      <%= question.votes %>
+      <%= link_to 'Up', 'questions/' + question.id.to_s + '/up_vote',
+        method: :patch%>
+      <%= link_to 'Down', 'questions/' + question.id.to_s + '/down_vote',
+        method: :patch%>
+    </div>
+    <span class="question-title">
+      <%= link_to question.title, question_path(question) %>
+    </span>
+    <span class="edit">
+      <%= link_to 'Edit', edit_question_path(question) %>
+    </span>
+  </div>
+  <hr>
 <% end %>
-</ul>
 
 <h3>Add a question:</h3>
 

@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   def index
-    @questions = Question.all
+    @questions = Question.order(votes: :desc)
     @question = Question.new
   end
 
@@ -44,9 +44,23 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def up_vote
+    @question = Question.find params[:id]
+    @question.increment!(:votes)
+
+    redirect_to questions_path
+  end
+
+  def down_vote
+    @question = Question.find params[:id]
+    @question.decrement!(:votes)
+
+    redirect_to questions_path
+  end
+
   private
 
   def question_params
-    params.require(:question).permit(:title, :content)
+    params.require(:question).permit(:title, :content, :votes)
   end
 end
