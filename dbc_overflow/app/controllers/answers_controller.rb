@@ -5,7 +5,11 @@ class AnswersController < ApplicationController
   def create
     @question = Question.find params[:question_id]
     @answer = @question.answers.create(answer_params)
-    redirect_to @question
+
+    respond_to do |format|
+      format.html { redirect_to @question }
+      format.js {}
+    end
   end
 
   def upvote
@@ -13,7 +17,10 @@ class AnswersController < ApplicationController
     @answer = Answer.find params[:id]
     @answer.increment!(:votes)
 
-    redirect_to question_path(@question)
+    respond_to do |format|
+      format.html { redirect_to question_path(@question) }
+      format.js {}
+    end
   end
 
   def downvote
@@ -21,7 +28,10 @@ class AnswersController < ApplicationController
     @answer = Answer.find params[:id]
     @answer.decrement!(:votes)
 
-    redirect_to question_path(@question)
+    respond_to do |format|
+      format.html { redirect_to question_path(@question) }
+      format.js {}
+    end
   end
 
   private

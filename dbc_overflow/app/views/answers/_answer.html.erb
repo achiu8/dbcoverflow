@@ -1,0 +1,15 @@
+<div class="answer">
+  <div class="votes">
+    <%= answer.votes %>
+    <%= link_to 'Up', upvote_question_answer_path(@question, answer),
+      method: :patch,
+      remote: true
+    %>
+    <%= link_to 'Down', downvote_question_answer_path(@question, answer),
+      method: :patch,
+      remote: true
+    %>
+  </div>
+  <span class="answer-content"><%= answer.content %></span>
+</div>
+<hr>

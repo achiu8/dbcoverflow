@@ -1,26 +1,22 @@
 <h2><%= @question.title %></h2>
 <div class="votes">
   <h3>
-    Votes: <%= @question.votes %>
-    <%= link_to 'Up', upvote_question_path(@question), method: :patch%>
-    <%= link_to 'Down', downvote_question_path(@question), method: :patch%>
+    Votes: <span class="question-votes"><%= @question.votes %></span>
+    <%= link_to 'Up', upvote_question_path(@question),
+      method: :patch,
+      remote: true
+    %>
+    <%= link_to 'Down', downvote_question_path(@question),
+      method: :patch,
+      remote: true
+    %>
   </h3>
 <p><%= @question.content %></p>
 
 <h3>Answers</h3>
-<% @answers.each do |answer| %>
-<div class="answer">
-  <div class="votes">
-    <%= answer.votes %>
-    <%= link_to 'Up', upvote_question_answer_path(@question, answer),
-      method: :patch %>
-    <%= link_to 'Down', downvote_question_answer_path(@question, answer),
-      method: :patch %>
-  </div>
-  <span class="answer-content"><%= answer.content %></span>
+<div id="answers">
+  <%= render @question.answers.order(votes: :desc) %>
 </div>
-<hr>
-<% end %>
 
 <h3>Add an answer:</h3>
 <%= render 'answers/form' %>

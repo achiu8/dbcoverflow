@@ -1,12 +1,12 @@
 class QuestionsController < ApplicationController
+  before_action :get_questions
+
   def index
-    @questions = Question.order(votes: :desc)
     @question = Question.new
   end
 
   def show
     @question = Question.find params[:id]
-    @answers = @question.answers.order(votes: :desc)
   end
 
   def new
@@ -16,10 +16,13 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params)
 
-    if @question.save
-      redirect_to @question
-    else
-      redirect_to questions_path
+    respond_to do |format|
+      if @question.save
+        format.html { redirect_to @question }
+        format.js {}
+      else
+        redirect_to questions_path
+      end
     end
   end
 
@@ -48,23 +51,29 @@ class QuestionsController < ApplicationController
     @question = Question.find params[:id]
     @question.increment!(:votes)
 
-    redirect_to :back
-  rescue ActionController::RedirectBackError
-    redirect_to root_path
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js {}
+    end
   end
 
   def downvote
     @question = Question.find params[:id]
     @question.decrement!(:votes)
 
-    redirect_to :back
-  rescue ActionController::RedirectBackError
-    redirect_to root_path
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js {}
+    end
   end
 
   private
 
   def question_params
     params.require(:question).permit(:title, :content, :votes)
+  end
+
+  def get_questions
+    @questions = Question.order(votes: :desc).order(updated_at: :desc)
   end
 end
