@@ -2,9 +2,6 @@ class QuestionsController < ApplicationController
   def index
     @questions = Question.order(votes: :desc)
     @question = Question.new
-
-    response = HTTParty.get("https://api.github.com/zen")
-    @quote = response.body
   end
 
   def show
