@@ -13,7 +13,6 @@ describe QuestionsController, type: :controller do
   it "#show" do
     get :show, id: question.id
     expect(assigns(:question)).to eq question
-    expect(assigns(:answers)).to eq question.answers
     expect(response).to render_template "show"
   end
 
@@ -22,12 +21,6 @@ describe QuestionsController, type: :controller do
       expect {
         post :create, question: { title: "new title", content: "new content" }
       }.to change { Question.count }.by(1)
-    end
-
-    it "doesn't create a new question with invalid params" do
-      expect {
-        post :create, question: { content: "new content" }
-      }.to change { Question.count }.by(0)
     end
   end
 

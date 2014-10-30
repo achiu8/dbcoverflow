@@ -52,7 +52,7 @@ class QuestionsController < ApplicationController
     @question.increment!(:votes)
 
     respond_to do |format|
-      format.html { redirect_to :back }
+      format.html { redirect_to @question }
       format.js {}
     end
   end
@@ -62,7 +62,7 @@ class QuestionsController < ApplicationController
     @question.decrement!(:votes)
 
     respond_to do |format|
-      format.html { redirect_to :back }
+      format.html { redirect_to @question }
       format.js {}
     end
   end
